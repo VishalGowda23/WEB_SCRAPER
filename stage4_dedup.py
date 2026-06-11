@@ -70,7 +70,7 @@ def run():
     print("=" * 60)
 
     if not all_records:
-        print("\n  ✓ No records to deduplicate.\n")
+        print("\n  [OK] No records to deduplicate.\n")
         return
 
     # Reset all duplicate flags first
@@ -153,7 +153,7 @@ def run():
     stats = db.get_stats()
     total_dupes = phone_dupes + name_dupes
 
-    print(f"\n  ✓ Stage 4 complete.")
+    print(f"\n  [OK] Stage 4 complete.")
     print(f"    Total duplicates marked: {total_dupes}")
     print(f"    Unique institutes:       {stats['institutes_unique']}")
     print(f"    Duplicate records:       {stats['institutes_duplicates']}\n")

@@ -69,14 +69,24 @@ def run():
     print("=" * 60)
 
     if total == 0:
-        print("\n  ⚠ No records to export. Run the pipeline first.\n")
+        print("\n  [WARNING] No records to export. Run the pipeline first.\n")
         return
 
     csv_path = export_csv()
-    print(f"\n  ✓ CSV exported:  {csv_path}")
+    print(f"\n  [OK] CSV exported:  {csv_path}")
 
     json_path = export_json()
-    print(f"  ✓ JSON exported: {json_path}")
+    print(f"  [OK] JSON exported: {json_path}")
+
+    # Sync with React Web Application assets
+    try:
+        import shutil
+        web_assets_dir = os.path.join(os.path.dirname(os.path.dirname(json_path)), "web", "src", "assets")
+        if os.path.exists(web_assets_dir):
+            shutil.copy2(json_path, os.path.join(web_assets_dir, "institutes.json"))
+            print(f"  [OK] Synced with React Web App assets: {os.path.join(web_assets_dir, 'institutes.json')}")
+    except Exception as e:
+        print(f"  [WARNING] Could not sync with React Web App assets: {e}")
 
     print(f"\n  Total records exported: {total}\n")
 
